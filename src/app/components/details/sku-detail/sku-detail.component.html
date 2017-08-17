@@ -1,0 +1,121 @@
+<div class="container" *ngIf="record">
+
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4>
+        SKU Details : {{record.SkuName}}
+
+        <template #popTemplate>
+          <a (click)="sendToBrief(); pop.hide();" class="pointer">Send to brief</a> <br>
+          <a (click)="artworkBuild(); pop.hide();" class="pointer">Artwork Build</a> <br>
+          <a (click)="sentForApproval(); pop.hide();" class="pointer">Send for Approval</a> <br>
+          <a (click)="amendsInArtwork(); pop.hide();" class="pointer">Amends in Artwork</a> <br>
+          <a (click)="approved(); pop.hide();" class="pointer">Approved</a> <br>
+          <a href="#">QC Approved and Rejected </a> <br>
+          <a href="#">Hold/Unhold </a> <br>
+          <a href="#">Reissue </a> <br>
+          <a href="#">Duplicate </a> <br>
+          <a href="#">Email Job Details </a>
+        </template>
+
+        <span class="pull-right glyphicon glyphicon-cog"  #pop="bs-popover" [popover]="popTemplate" containerClass="'customClass'" placement="bottom">
+       </span>
+      </h4>
+
+    </div>
+
+
+    <div class="panel-body">
+      <form class="form">
+        <div class="row">
+          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+            <div class="form-group">
+              <label>Jpg Ref</label>
+              <input type="text" class="form-control" [(ngModel)]="record.JpgRef" name="JpgRef">
+            </div>
+            <div class="form-group">
+              <label>Sku Name</label>
+              <input type="text" class="form-control" [(ngModel)]="record.SkuName" name="skuName">
+            </div>
+            <div class="form-group">
+              <label>Project Name</label>
+              <input type="text" class="form-control" [(ngModel)]="record.ProjectName" name="ProjectName">
+            </div>
+            <div class="form-group">
+              <label>HKPM</label>
+              <input type="text" class="form-control" [(ngModel)]="record.HKPM" name="HKPM">
+            </div>
+            <div class="form-group">
+              <label>FTP Date</label>
+              <input type="text" class="form-control" [(ngModel)]="record.FTPDate" name="FTPDate">
+            </div>
+          </div>
+
+          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+            <div class="form-group">
+              <label>Status</label>
+              <input type="text" class="form-control" [(ngModel)]="record.Status" name="Status">
+            </div>
+            <div class="form-group">
+              <label>Pack Type</label>
+              <input type="text" class="form-control" [(ngModel)]="record.PackType" name="PackType">
+            </div>
+            <div class="form-group">
+              <label>Version</label>
+              <input type="text" class="form-control" [(ngModel)]="record.version" name="version">
+            </div>
+            <div class="form-group">
+              <label>Business Unit</label>
+              <input type="text" class="form-control" [(ngModel)]="record.businessUnit" name="businessUnit">
+            </div>
+            <div class="form-group">
+              <label>Client</label>
+              <input type="text" class="form-control" [(ngModel)]="record.Client" name="Client">
+            </div>
+            <div class="form-group">
+              <label>Department Code</label>
+              <input type="text" class="form-control" [(ngModel)]="record.departmentCode" name="departmentCode">
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="panel-footer">
+      <a class="btn btn-success" [routerLink]="['/skulist']">Back</a>
+      <button type="button" (click)='updateSku(record.id)' class="btn btn-primary" data-dismiss="myModal" [disabled]="!isValidForm() || isProcessing">{{ isProcessing ? 'Submitting...' : 'Submit' }}</button>
+    </div>
+
+    <div class="panel-heading">
+      <h5> Tracker Details </h5>
+    </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>General Comment</th>
+                <th>Core Process</th>
+                <th>Process Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let jrecord of jrecords">
+                <td>{{ jrecord.generalComment }}</td>
+                <td>{{ jrecord.coreProcess }}</td>
+                <td>{{ jrecord.processAction }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+
+<div>
+  <ngx-alerts></ngx-alerts>
+</div>

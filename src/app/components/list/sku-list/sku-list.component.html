@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h5> SKU List </h5>
+    </div>
+
+
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th> </th>
+              <th>JPG Ref</th>
+              <th>SKU Name</th>
+              <th>Project Name</th>
+              <th>HK PM</th>
+              <th>Version</th>
+              <th>Client</th>
+              <th>Pack Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of records">
+              <td> <a [routerLink]="['/skulist', record.id]"> >> </a> </td>
+              <td>{{ record.JpgRef }}</td>
+              <td>{{ record.SkuName }}</td>
+              <td>{{ record.ProjectName }}</td>
+              <td>{{ record.HKPM }}</td>
+              <td>{{ record.version }}</td>
+              <td>{{ record.Client }}</td>
+              <td>{{ record.PackType }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  *ngIf="record" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New SKU</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Sku Name</label>
+          <input type="text" class="form-control" [(ngModel)]= "record.SkuName" name="SkuName">
+        </div>
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" class="form-control" [(ngModel)]= "record.ProjectName"  name="ProjectName">
+        </div>
+        <div class="panel-footer">
+          <a class="btn btn-danger" [routerLink]="['/skulist']">Cancel</a>
+          <button class="btn btn-success" type="button" (click)='submitPost()' data-dismiss="myModal" class="btn btn-default">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

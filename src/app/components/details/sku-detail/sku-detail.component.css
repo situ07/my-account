@@ -1,0 +1,17 @@
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.glyphicon {
+    font-size: 1.2em;
+}
+.customClass{
+    background-color: #2C4878;
+    color: white;
+}
+
+.pointer {
+    cursor: pointer;
+}
