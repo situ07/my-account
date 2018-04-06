@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-8">
+          <h4> Companies List </h4>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-11">
+              <input #myInput type="text" class="form-control" name="skusearch" placeholder="Search by Company Name">
+            </div>
+            <div class="col-md-1">
+              <h4> <span class="pull-right glyphicon glyphicon-search" (click)="showSearchData(myInput.value)"> </span> </h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Address</th>
+              <th>Telephone</th>
+              <th>Fax</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of records">
+              <td> <a [routerLink]="['/companylist', record.id]"> >> </a> </td>
+              <td>{{ record.companyname }}</td>
+              <td>{{ record.type }}</td>
+              <td>{{ record.address }}</td>
+              <td>{{ record.telephone }}</td>
+              <td>{{ record.fax }}</td>
+              <td>{{ record.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="record" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Company</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #heroForm="ngForm">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" class="form-control" [(ngModel)]="record.companyname" name="companyname" required>
+          </div>
+          <div class="form-group">
+              <label>Type</label>
+              <select class="form-control" [(ngModel)]="record.type" name="type">
+                  <option value="Client">Client</option>
+                  <option value="Supplier">Supplier</option>
+                  <option value="Printer">Printer</option>
+                  <option value="Jpg site">JPG Site</option>
+                  <option value="Sourcing agency">sourcing agency</option>
+                </select>
+            </div>
+        </form>
+        <div class="panel-footer">
+          <a class="btn btn-danger" [routerLink]="['/companylist']">Cancel</a>
+          <button class="btn btn-primary" type="button" (click)='submitPost()' data-dismiss="myModal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

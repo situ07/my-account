@@ -1,0 +1,267 @@
+<div class="container" *ngIf="record">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4> {{record.type}} Details : {{record.companyname}}</h4>
+    </div>
+  </div>
+
+  <accordion>
+    <accordion-group heading=" {{record.type}} Details:" [panelClass]="'panel-primary'">
+      <div class="row">
+        <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" class="form-control" [(ngModel)]="record.companyname" name="companyname">
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" [(ngModel)]="record.type" name="type">
+          </div>
+          <div class="form-group">
+            <label>Address </label>
+            <input type="text" class="form-control" [(ngModel)]="record.address" name="address">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" [(ngModel)]="record.email" name="email">
+          </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+          <div class="form-group">
+            <label>Telephone</label>
+            <input type="text" class="form-control" [(ngModel)]="record.telephone" name="telephone">
+          </div>
+          <div class="form-group">
+            <label>Fax</label>
+            <input type="text" class="form-control" [(ngModel)]="record.fax" name="type">
+          </div>
+          <div class="form-group">
+            <label>JPG Site </label>
+            <input type="text" class="form-control" name="jpgsite">
+          </div>
+          <div class="form-group">
+            <label>Approver</label>
+            <input type="text" class="form-control" name="Approver">
+          </div>
+        </div>
+
+        <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+          <div class="form-group">
+            <label>Supplier</label>
+            <input type="text" class="form-control" name="Supplier">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" class="form-control" name="state">
+          </div>
+          <div class="form-group">
+            <label>Country </label>
+            <input type="text" class="form-control" name="Country">
+          </div>
+          <div class="form-group">
+            <label>Printer</label>
+            <input type="text" class="form-control" name="printer">
+          </div>
+        </div>
+
+
+      </div>
+
+    </accordion-group>
+    <accordion-group heading="Contact Details:" [panelClass]="'panel-primary'">
+      <div class="panel panel-info">
+        <div class="panel-heading"> List of Contacts for {{record.companyname}}
+          <span class="pull-right glyphicon glyphicon-plus" (click)='addContact()'> </span>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Role</th>
+                  <th>Type</th>
+                  <th>Company Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contact of contacts">
+                  <td>{{ contact.name }}</td>
+                  <td>{{ contact.email }}</td>
+                  <td>{{ contact.department }}</td>
+                  <td>{{ contact.role }}</td>
+                  <td>{{ contact.type }}</td>
+                  <td>{{ contact.CompanyName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </accordion-group>
+    <accordion-group heading="Price Matrix:" [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+      <div class="panel panel-info">
+        <div class="panel-heading"> Packaging Manager List:
+          <span class="pull-right glyphicon glyphicon-plus" (click)='addPriceMatrix()'> </span>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Group</th>
+                  <th>Pack Type</th>
+                  <th>Description</th>
+                  <th>Artwork Cost</th>
+                  <th>Management Cost</th>
+                  <th>Opal Cost</th>
+                  <th>PQM Cost</th>
+                  <th>Proof Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pricematrix of pricematrixes">
+                  <td>{{ pricematrix.group }}</td>
+                  <td>{{ pricematrix.packtype }}</td>
+                  <td>{{ pricematrix.description }}</td>
+                  <td>{{ pricematrix.artworkcost }}</td>
+                  <td>{{ pricematrix.managementcost }}</td>
+                  <td>{{ pricematrix.opalcost }}</td>
+                  <td>{{ pricematrix.pqmcost }}</td>
+                  <td>{{ pricematrix.proofcost }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </accordion-group>
+    <accordion-group heading="Pack Copy Configuration:" [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+    </accordion-group>
+    <accordion-group heading="Email Templates:" [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+    </accordion-group>
+    <accordion-group heading="QC Manager:" [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+    </accordion-group>
+    <accordion-group [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+      <div accordion-heading>
+        Brand/Guideline Manager:
+      </div>
+    </accordion-group>
+    <accordion-group heading="Status Configuration:" [panelClass]="'panel-primary'" *ngIf="record.type == 'Client'">
+    </accordion-group>
+  </accordion>
+
+  <div class="panel-footer">
+    <a class="btn btn-success" [routerLink]="['/companylist']">Back</a>
+    <button type="button" class="btn btn-primary" (click)='updateCompany(record.id)'>Submit</button>
+  </div>
+
+  <div>
+    <ngx-alerts></ngx-alerts>
+  </div>
+
+</div>
+
+<div bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Contact</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #heroForm="ngForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" [(ngModel)]="JContact.name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" [(ngModel)]="JContact.email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" class="form-control" [(ngModel)]="JContact.department" name="department" required>
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <input type="text" class="form-control" [(ngModel)]="JContact.role" name="role" required>
+          </div>
+        </form>
+        <div class="panel-footer">
+          <a class="btn btn-danger" (click)='hideChildModal()'>Cancel</a>
+          <button class="btn btn-primary" type="button" (click)='submitPostContact()' data-dismiss="myModal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #priceMatrixModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Pack Type</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModalPack()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #heroForm="ngForm">
+          <div class="row">
+            <div class="col-xs-4 col-md-4 col-lg-8 vcenter">
+              <div class="form-group">
+                <label>Pack Type</label>
+                <input type="text" class="form-control" name="packtype" required>
+              </div>
+              <div class="form-group">
+                <label>Group</label>
+                <input type="text" class="form-control" name="group" required>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" name="description" required>
+              </div>
+              <div class="form-group">
+                <label>Artwork Cost</label>
+                <input type="text" class="form-control" name="artworkcost" required>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+              <div class="form-group">
+                <label>Management Cost</label>
+                <input type="text" class="form-control" name="managementcost" required>
+              </div>
+              <div class="form-group">
+                <label>Opal Cost</label>
+                <input type="text" class="form-control" name="opalcost" required>
+              </div>
+              <div class="form-group">
+                <label>PQM Cost</label>
+                <input type="text" class="form-control" name="pqmcost" required>
+              </div>
+              <div class="form-group">
+                <label>Proof Cost</label>
+                <input type="text" class="form-control" name="proofcost" required>
+              </div>
+            </div>
+          </div>
+
+        </form>
+        <div class="panel-footer">
+          <a class="btn btn-danger" (click)='hideChildModalPack()'>Cancel</a>
+          <button class="btn btn-primary" type="button" (click)='submitPost()' data-dismiss="myModal">Submit</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

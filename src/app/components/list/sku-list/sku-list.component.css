@@ -1,0 +1,8 @@
+.searchText input{
+    vertical-align:top;
+  }
+
+  table td {
+    border-left: 1px solid #ADADAD;
+    border-right: 1px solid #ADADAD;
+}

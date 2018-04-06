@@ -2,19 +2,18 @@
   <span style="font-size:40px;cursor:pointer" (click)="openNav()"><img src="assets/images/Main Menu_Blue.png" style="width:34px;height:35px;"> </span>
   <span style="font-size:40px;cursor:pointer" ><img src="assets/images/Filter_Blue.png" style="width:34px;height:35px;"> </span>
   <span style="font-size:40px;cursor:pointer" (click)="add()" ><img src="assets/images/add_Blue.png" style="width:34px;height:35px;"> </span>
-  <span style="font-size:40px;cursor:pointer" ><img src="assets/images/Form View Icon_Blue.png" style="width:34px;height:35px;"> </span>
+  <span style="font-size:40px;cursor:pointer"  ><img src="assets/images/Form View Icon_Blue.png" style="width:34px;height:35px;"> </span>
   <span style="font-size:40px;cursor:pointer" ><img src="assets/images/eye_Blue.png" style="width:34px;height:35px;"> </span>
-  <span style="font-size:40px;cursor:pointer" ><img src="assets/images/Action.png" style="width:34px;height:35px;"> </span>
   <span style="font-size:40px;cursor:pointer" ><img src="assets/images/download_Blue2.png" style="width:34px;height:35px;"> </span>
   <span style="font-size:40px;cursor:pointer" ><img src="assets/images/Import_Blue.png" style="width:34px;height:35px;"> </span>
-  <span style="font-size:40px;cursor:pointer;float:right" (click)="Home()" ><img src="assets/images/home.png" style="width:34px;height:35px;"> </span>
+  <span style="font-size:50px;cursor:pointer" (click)="Home()" ><img src="assets/images/home.png" style="width:34px;height:35px;"> </span>
+  <!--<span class="glyphicon glyphicon-log-in" style="font-size:35px;cursor:pointer;" (click)="login()" > </span> -->
 </div>
 <div id="mySidenav" class="sidenav" [style.width.px]="width">
   <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
-  <a href="#">Search</a>
-  <a href="#">Task</a>
-  <a href="#">Companies</a>
-  <a href="#">Contatcs</a>
+  <a (click)="companylist()" class="pointer">Companies</a>
+  <a (click)="contactlist()" class="pointer" >Contact</a>
   <a (click)="projectlist()" class="pointer" >Project List</a>
   <a (click)="skulist()" class="pointer">SKU List</a>
+  <a (click)="invoicelist()" class="pointer">Invoice List</a>
 </div>

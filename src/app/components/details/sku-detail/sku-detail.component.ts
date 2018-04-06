@@ -7,7 +7,12 @@ import { IJobTicketRecord } from '../../../models/job-ticket-record';
 
 import { JobTicketRecordService } from '../../../services/job-ticket-record.service'
 
+import { PopoverModule } from 'ngx-bootstrap';
+
 import { AlertModule, AlertService } from 'ngx-alerts';
+import { ProgressbarModule } from 'ngx-bootstrap';
+import { AccordionModule,BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -24,11 +29,21 @@ export class SkuDetailComponent implements OnInit {
   jrecords: IJobTicketRecord[];
   private errorMessage: string;
   private sub: Subscription;
-  public status: string;
+  public skustatus: string;
   public isValid: boolean;
   public jrecord = <IJobTicketRecord>{};
   isProcessing: boolean = false;
-
+  public status: any = {
+    isFirstOpen: true,
+    isFirstDisabled: false
+  };
+  public customClass: string = 'customClass';
+  public isFirstOpen: boolean = true;
+  public max: number = 200;
+  public showWarning: boolean;
+  public dynamic: number;
+  public type: string;
+  public statusval: number;
 
   constructor(
     private _jobTicketService: JobTicketService,
@@ -36,7 +51,7 @@ export class SkuDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private router : Router,
     private alertService: AlertService
-  ) { }
+  ) {}
 
   ngOnInit() {
 
@@ -48,6 +63,8 @@ export class SkuDetailComponent implements OnInit {
         }
         else {
           this.getRecord(id);
+          this.projectList();
+          this.clientsList();
         }
 
       }
@@ -59,9 +76,10 @@ export class SkuDetailComponent implements OnInit {
     this._jobTicketService.getById(id).subscribe(
       data => {
         this.record = data;
-        this.status = "";
+        this.skustatus = "";
         this.isValid = true;
         this.getTrackerRecord(id);
+       // this.statusBar();
       },
       error => {
         console.log(error);
@@ -99,7 +117,7 @@ export class SkuDetailComponent implements OnInit {
           this.isProcessing = false;
         }
       );
-    }, 1000);
+    }, 500);
 
   }
   isValidForm() {
@@ -117,59 +135,126 @@ export class SkuDetailComponent implements OnInit {
 
   sendToBrief(): void {
     this.record.Status = "A1 Artwork in Progress";
-    this.updateSku(this.record.id);
+    //this.updateSku(this.record.id);
     this.jrecord.generalComment = "Artwork Briefed to Studio";
     this.jrecord.coreProcess = "Project";
     this.jrecord.processAction = "Artwork";
     this.jrecord.jobticketid = this.record.id;
     this.addTracker();
-     this.getRecord(this.record.id)
-    this.router.navigate(['./skulist'])
+    this.updateSku(this.record.id)
+    this.getTrackerRecord(this.record.id)
   }
 
   artworkBuild(): void {
     this.record.Status = "A1 Artwork in QC";
-    this.updateSku(this.record.id);
+    //this.updateSku(this.record.id);
     this.jrecord.generalComment = "Artwork Built";
     this.jrecord.coreProcess = "Project";
     this.jrecord.processAction = "Artwork";
     this.jrecord.jobticketid = this.record.id;
     this.addTracker();
-    this.getRecord(this.record.id)
+    this.updateSku(this.record.id)
+    this.getTrackerRecord(this.record.id)
   }
 
   sentForApproval(): void {
     this.record.Status = "On Approval";
-    this.updateSku(this.record.id);
+    //this.updateSku(this.record.id);
     this.jrecord.generalComment = "Sent for Approval";
     this.jrecord.coreProcess = "Project";
     this.jrecord.processAction = "Artwork";
     this.jrecord.jobticketid = this.record.id;
     this.addTracker();
-    this.getRecord(this.record.id)
+    this.updateSku(this.record.id)
+    this.getTrackerRecord(this.record.id)
   }
 
   amendsInArtwork(): void {
     this.record.Status = "Amends in Artwork";
-    this.updateSku(this.record.id);
     this.jrecord.generalComment = "Amends in Artwork";
     this.jrecord.coreProcess = "Project";
     this.jrecord.processAction = "Artwork";
     this.jrecord.jobticketid = this.record.id;
     this.addTracker();
-    this.getRecord(this.record.id)
+    this.updateSku(this.record.id)
+    this.getTrackerRecord(this.record.id)
   }
 
   approved(): void {
     this.record.Status = "Prepress in Progress";
-    this.updateSku(this.record.id);
     this.jrecord.generalComment = "Approved by Shitanshu";
     this.jrecord.coreProcess = "Project";
     this.jrecord.processAction = "Artwork";
     this.jrecord.jobticketid = this.record.id;
     this.addTracker();
-    this.getRecord(this.record.id)
+    this.updateSku(this.record.id)
+    this.getTrackerRecord(this.record.id)
   }
+
+  public statusBar(): void {
+    switch(this.record.Status) { 
+      case "A1 Artwork in Progress": { 
+         this.statusval = 25; 
+         break; 
+      } 
+      case "A1 Artwork in QC": { 
+         this.statusval = 50; 
+         break; 
+      } 
+      default: { 
+        this.statusval= 100;
+         break; 
+      } 
+   } 
+    let type: string;
+ 
+    if (this.statusval === 25) {
+      type = 'In Progress';
+    } else if (this.statusval === 50) {
+      type = 'On Approval';
+    } else if (this.statusval === 75) {
+      type = 'Approved';
+    } else {
+      type = 'On Hold';
+    }
+ 
+    this.dynamic = this.statusval;
+    this.type = type;
+  
+  }
+
+  colorTheme = 'theme-green';
+  
+   bsConfig: Partial<BsDatepickerConfig>;
+  
+   applyTheme(pop: any) {
+     // create new object on each property change
+     // so Angular can catch object reference change
+     this.bsConfig = Object.assign({}, {containerClass: this.colorTheme});
+     setTimeout(() => {
+       pop.show();
+     });
+   }
+
+   projects: any[];
+   projectList() {
+     this._jobTicketService.projectlist().subscribe(
+       data => {
+         this.projects = data;
+         console.log(this.projects);
+       },
+     );
+   }
+ 
+   clients: any[];
+   clientsList() {
+     this._jobTicketService.clientlist().subscribe(
+       data => {
+         this.clients = data;
+         console.log(this.clients);
+       },
+     );
+   }
 
 
 }

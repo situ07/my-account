@@ -1,96 +1,282 @@
 <div class="container" *ngIf="record">
-
-
-  <div class="panel panel-primary">
+  <div class="panel panel-info">
     <div class="panel-heading">
-      <h4>
-        SKU Details : {{record.SkuName}}
+      <div class="row">
+        <div class="col-md-10">
+          <h4> SKU Details : {{record.SkuName}}</h4>
+        </div>
+        <div class="col-md-2">
+          <span class="pull-left glyphicon glyphicon-cog" #pop="bs-popover" [popover]="popTemplate" containerClass="customClass" placement="bottom">
+          </span>
 
-        <template #popTemplate>
-          <a (click)="sendToBrief(); pop.hide();" class="pointer">Send to brief</a> <br>
-          <a (click)="artworkBuild(); pop.hide();" class="pointer">Artwork Build</a> <br>
-          <a (click)="sentForApproval(); pop.hide();" class="pointer">Send for Approval</a> <br>
-          <a (click)="amendsInArtwork(); pop.hide();" class="pointer">Amends in Artwork</a> <br>
-          <a (click)="approved(); pop.hide();" class="pointer">Approved</a> <br>
-          <a href="#">QC Approved and Rejected </a> <br>
-          <a href="#">Hold/Unhold </a> <br>
-          <a href="#">Reissue </a> <br>
-          <a href="#">Duplicate </a> <br>
-          <a href="#">Email Job Details </a>
-        </template>
+          <ng-template #popTemplate>
+            <div class= "test">
+              <a (click)="sendToBrief(); pop.hide();" class="pointer">Send to brief</a>
+              <br>
+              <a (click)="artworkBuild(); pop.hide();" class="pointer">Artwork Build</a>
+              <br>
+              <a (click)="sentForApproval(); pop.hide();" class="pointer">Send for Approval</a>
+              <br>
+              <a (click)="amendsInArtwork(); pop.hide();" class="pointer">Amends in Artwork</a>
+              <br>
+              <a (click)="approved(); pop.hide();" class="pointer">Approved</a>
+              <br>
+              <a href="#">QC Approved and Rejected </a>
+              <br>
+              <a href="#">Hold/Unhold </a>
+              <br>
+              <a href="#">Reissue </a>
+              <br>
+              <a href="#">Duplicate </a>
+              <br>
+              <a href="#">Email Job Details </a>
 
-        <span class="pull-right glyphicon glyphicon-cog"  #pop="bs-popover" [popover]="popTemplate" containerClass="'customClass'" placement="bottom">
-       </span>
-      </h4>
+            </div>
+          </ng-template>
 
+        </div>
+      </div>
     </div>
+  </div>
 
 
-    <div class="panel-body">
-      <form class="form">
+
+
+  <accordion>
+    <accordion-group heading="Line Details:" [panelClass]="'panel-primary'" [isOpen]="status.isFirstOpen" [isDisabled]="status.isFirstDisabled">
+      <div class="panel-body">
+        <form class="form">
+          <div class="row">
+            <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+              <div class="form-group">
+                <label>Jpg Ref</label>
+                <input type="text" class="form-control" [(ngModel)]="record.JpgRef" name="JpgRef">
+              </div>
+              <div class="form-group">
+                <label>Sku Name</label>
+                <input type="text" class="form-control" [(ngModel)]="record.SkuName" name="skuName">
+              </div>
+              <div class="form-group">
+                <label>Project Name </label>
+                <select class="form-control" [(ngModel)]="record.ProjectName" name="ProjectName">
+                  <option *ngFor="let project of projects" value="{{ project.ProjectName }}">{{ project.ProjectName }} </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>HKPM</label>
+                <select class="form-control" [(ngModel)]="record.HKPM" name="HKPM">
+                  <option value="Mark Lee">Mark Lee</option>
+                  <option value="Katie Pao">Katie Pao</option>
+                  <option value="Sue Chan">Sue Chan</option>
+                  <option value="Daniel Lei">Shitanshu Shekhar</option>
+                  <option value="Vivian Pao">Vivian Pao</option>
+                  <option value="Abby Lo">Mark Lee</option>
+                  <option value="Timmy Tong">Katie Pao</option>
+                  <option value="Cher Law">Sue Chan</option>
+                  <option value="Winnie Fong">Shitanshu Shekhar</option>
+                  <option value="Angel Ho">Vivian Pao</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>FTP Date</label>
+                <input type="text" class="form-control" [(ngModel)]="record.FTPDate" name="FTPDate" bsDatepicker #dp="bsDatepicker" [bsConfig]="bsConfig">
+              </div>
+            </div>
+
+            <div class="col-xs-4 col-md-4 col-lg-4 vcenter">
+              <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" [(ngModel)]="record.Status" name="Status">
+                  <option value="A1 Artwork in Progress">A1 Artwork in Progress</option>
+                  <option value="A1 Artwork in QC">A1 Artwork in QC</option>
+                  <option value="On Approval">On Approval</option>
+                  <option value="Offline Approval">Offline Approval</option>
+                  <option value="Ready to Release">Ready to Release</option>
+                  <option value="Prepress Ready">Prepress Ready</option>
+                  <option value="Amends in Required">Amends in Required</option>
+                  <option value="Prepress In progress">Prepress In progress</option>
+                  <option value="Released">Released</option>
+                  <option value="Canceled">Canceled</option>
+                  <option value="Complete">Complete</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Pack Type</label>
+                <select class="form-control" [(ngModel)]="record.PackType" name="PackType">
+                  <option value="Barcode Label">Barcode Label</option>
+                  <option value="Small Label - Linework">Small Label - Linework</option>
+                  <option value="BOP Label">BOP Label</option>
+                  <option value="Price Point Sticker">Price Point Sticker</option>
+                  <option value="Carton - Halftone (incl Photo)">Carton - Halftone (incl Photo)</option>
+                  <option value="Flag Label - Linework">Flag Label - Linework</option>
+                  <option value="Front & Back Label - Linework">Front & Back Label - Linework</option>
+                  <option value="Small Label - Halftone (incl Photo)">Small Label - Halftone (incl Photo)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Version</label>
+                <input type="text" class="form-control" [(ngModel)]="record.version" name="version">
+              </div>
+              <div class="form-group">
+                <label>Business Unit</label>
+                <input type="text" class="form-control" [(ngModel)]="record.businessUnit" name="businessUnit">
+              </div>
+              <div class="form-group">
+                <label>Client</label>
+                <select class="form-control" [(ngModel)]="record.Client" name="Client">
+                  <option *ngFor="let client of clients" value="{{ client.companyname }}">{{ client.companyname }} </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-3 col-md-3 col-lg-3 vcenter">
+              <div class="form-group">
+                <label>Retouching Status</label>
+                <select class="form-control" name="retouchingStatus">
+                  <option value="RT1 Retouching In Progress">RT1 Retouching In Progress</option>
+                  <option value="Retouching On Approval">Retouching On Approval</option>
+                  <option value="Retouching Amends In Progress">Retouching Amends In Progress</option>
+                  <option value="Retouching Approved">Retouching Approved</option>
+                  <option value="Retouching Ready to Release">Retouching Ready to Release</option>
+                  <option value="Retouching Released">Retouching Released</option>
+                  <option value="Retouching On Hold">Retouching On Hold</option>
+                  <option value="Retouching Cancelled">Retouching Cancelled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Photography Status</label>
+                <select class="form-control" name="retouchingStatus">
+                  <option value="Photography In Progress">Photography In Progress</option>
+                  <option value="Photography On Approval">Photography On Approval</option>
+                  <option value="Photography Amends In Progress">Photography Amends In Progress</option>
+                  <option value="Photography Approved">Photography Approved</option>
+                  <option value="Photography Ready to Release">Photography Ready to Release</option>
+                  <option value="Photography Released">Photography Released</option>
+                  <option value="Photography On Hold">Photography On Hold</option>
+                  <option value="Photography Cancelled">Photography Cancelled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>PQM Status</label>
+                <select class="form-control" name="retouchingStatus">
+                  <option value="Waiting">Waiting</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="On Hold">On Hold</option>
+                  <option value="Pass">Photography Approved</option>
+                  <option value="Conditional">Conditional</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Estimate Status</label>
+                <select class="form-control" name="retouchingStatus">
+                  <option value="Not Estimated">Not Estimated</option>
+                  <option value="Prepared for Estimate">In Progress</option>
+                  <option value="Estimate Sent">On Hold</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Invoice Status</label>
+                <select class="form-control" name="retouchingStatus">
+                  <option value="Live">Live</option>
+                  <option value="Released Pre Invoice">Released Pre Invoice</option>
+                  <option value="Cleared to Invoice">Cleared to Invoice</option>
+                  <option value="Passed for Invoice">Passed for Invoice</option>
+                  <option value="Invoice Sent">Invoice Sent</option>
+                  <option value="Invoice Paid">Invoice Paid</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </accordion-group>
+    <accordion-group heading="General Info" [panelClass]="'panel-primary'">
+      <div class="panel-body">
         <div class="row">
-          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+          <div class="col-xs-6 col-md-6 col-lg-7 vcenter">
             <div class="form-group">
-              <label>Jpg Ref</label>
-              <input type="text" class="form-control" [(ngModel)]="record.JpgRef" name="JpgRef">
+              <label>Sourcing Route:</label>
+              <input type="text" class="form-control" name="JpgRef">
             </div>
             <div class="form-group">
-              <label>Sku Name</label>
-              <input type="text" class="form-control" [(ngModel)]="record.SkuName" name="skuName">
+              <label>Payment:</label>
+              <input type="text" class="form-control" name="skuName">
             </div>
             <div class="form-group">
-              <label>Project Name</label>
-              <input type="text" class="form-control" [(ngModel)]="record.ProjectName" name="ProjectName">
+              <label>Lead / Sub:</label>
+              <input type="text" class="form-control" name="ProjectName">
             </div>
             <div class="form-group">
-              <label>HKPM</label>
-              <input type="text" class="form-control" [(ngModel)]="record.HKPM" name="HKPM">
-            </div>
-            <div class="form-group">
-              <label>FTP Date</label>
-              <input type="text" class="form-control" [(ngModel)]="record.FTPDate" name="FTPDate">
+              <label>Language:</label>
+              <input type="text" class="form-control" name="ProjectName">
             </div>
           </div>
 
-          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+          <div class="col-xs-3 col-md-3 col-lg-4 vcenter">
             <div class="form-group">
-              <label>Status</label>
-              <input type="text" class="form-control" [(ngModel)]="record.Status" name="Status">
+              <label>Event:</label>
+              <input type="text" class="form-control" name="Status">
             </div>
             <div class="form-group">
-              <label>Pack Type</label>
-              <input type="text" class="form-control" [(ngModel)]="record.PackType" name="PackType">
+              <label>Artwork Type:</label>
+              <input type="text" class="form-control" name="PackType">
             </div>
             <div class="form-group">
-              <label>Version</label>
-              <input type="text" class="form-control" [(ngModel)]="record.version" name="version">
+              <label>Halftone / Linework:</label>
+              <input type="text" class="form-control" name="version">
             </div>
             <div class="form-group">
-              <label>Business Unit</label>
-              <input type="text" class="form-control" [(ngModel)]="record.businessUnit" name="businessUnit">
-            </div>
-            <div class="form-group">
-              <label>Client</label>
-              <input type="text" class="form-control" [(ngModel)]="record.Client" name="Client">
-            </div>
-            <div class="form-group">
-              <label>Department Code</label>
-              <input type="text" class="form-control" [(ngModel)]="record.departmentCode" name="departmentCode">
+              <label>Photography Source:</label>
+              <input type="text" class="form-control" name="version">
             </div>
           </div>
         </div>
+      </div>
 
-      </form>
-    </div>
+    </accordion-group>
 
-    <div class="panel-footer">
-      <a class="btn btn-success" [routerLink]="['/skulist']">Back</a>
-      <button type="button" (click)='updateSku(record.id)' class="btn btn-primary" data-dismiss="myModal" [disabled]="!isValidForm() || isProcessing">{{ isProcessing ? 'Submitting...' : 'Submit' }}</button>
-    </div>
 
-    <div class="panel-heading">
-      <h5> Tracker Details </h5>
-    </div>
+    <accordion-group heading="Brand and packaging info" [panelClass]="'panel-primary'">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+            <div class="form-group">
+              <label>Business Unit / Category:</label>
+              <input type="text" class="form-control" name="JpgRef">
+            </div>
+            <div class="form-group">
+              <label>Brand Route:</label>
+              <input type="text" class="form-control" name="skuName">
+            </div>
+            <div class="form-group">
+              <label>Sub-Catagory / Department :</label>
+              <input type="text" class="form-control" name="ProjectName">
+            </div>
+          </div>
+
+          <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+            <div class="form-group">
+              <label>Brand Name / Design Guideline:</label>
+              <input type="text" class="form-control" name="Status">
+            </div>
+            <div class="form-group">
+              <label>Brand Variation:</label>
+              <input type="text" class="form-control" name="PackType">
+            </div>
+            <div class="form-group">
+              <label>Ink Standard Name:</label>
+              <input type="text" class="form-control" name="version">
+            </div>
+          </div>
+        </div>
+      </div>
+    </accordion-group>
+
+
+
+    <accordion-group heading="Tracker Info" [panelClass]="'panel-primary'">
       <div class="panel-body">
         <div class="table-responsive">
           <table class="table">
@@ -111,11 +297,20 @@
           </table>
         </div>
       </div>
+    </accordion-group>
+  </accordion>
 
+  <div class="panel-footer">
+    <a class="btn btn-success" [routerLink]="['/skulist']">Back</a>
+    <button type="button" (click)='updateSku(record.id)' class="btn btn-primary" data-dismiss="myModal" [disabled]="!isValidForm() || isProcessing">{{ isProcessing ? 'Submitting...' : 'Submit' }}</button>
   </div>
-</div>
+  <!--
+  <progressbar class="progress-striped active" [value]="dynamic" [type]="type">
+      {{type}}
+   </progressbar> -->
 
+  <div>
+    <ngx-alerts></ngx-alerts>
+  </div>
 
-<div>
-  <ngx-alerts></ngx-alerts>
 </div>

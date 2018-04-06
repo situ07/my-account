@@ -1,3 +1,65 @@
-<p>
-  Hello this is project list
-</p>
+<div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h5> Project List </h5>
+      </div>
+
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th> </th>
+                <th>Project Name</th>
+                <th>Season</th>
+                <th>Supplier</th>
+                <th>NoOfSkus</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of records">
+                <td> <a [routerLink]="['/projectlist', record.id]"> >> </a> </td>
+                <td>{{ record.ProjectName }}</td>
+                <td>{{ record.Season }}</td>
+                <td>{{ record.Supplier }}</td>
+                <td>{{ record.NoOfSkus }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+
+  <div *ngIf="record" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add New Project</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #heroForm="ngForm">
+          <div class="form-group">
+            <label>Project Name</label>
+            <input type="text" class="form-control" [(ngModel)]="record.ProjectName" name="SkuName" required>
+          </div>
+          <div class="form-group">
+            <label>Choose Client</label>
+            <select class="form-control" [(ngModel)]="record.CompanyName" name="CompanyName">
+                <option *ngFor="let client of clients" value="{{ client.companyname }}">{{ client.companyname }} </option>
+              </select>
+          </div>
+        </form>
+        <div class="panel-footer">
+          <a class="btn btn-danger" [routerLink]="['/projectlist']">Cancel</a>
+          <button class="btn btn-success" type="button" (click)='submitPost()' data-dismiss="myModal" class="btn btn-default">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

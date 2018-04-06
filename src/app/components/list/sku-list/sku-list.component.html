@@ -1,9 +1,23 @@
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h5> SKU List </h5>
-    </div>
+      <div class="row">
+        <div class="col-md-8">
+          <h4> SKU List </h4>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-11">
+              <input #myInput type="text" class="form-control" name="skusearch" placeholder="Search by SKU Name">
+            </div>
+            <div class="col-md-1">
+              <h4> <span class="pull-right glyphicon glyphicon-search" (click)="showSearchData(myInput.value)"> </span> </h4>
+            </div>
+          </div>
+        </div>
 
+      </div>
+    </div>
 
     <div class="panel-body">
       <div class="table-responsive">
@@ -36,10 +50,11 @@
       </div>
     </div>
   </div>
+  <pagination [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
 </div>
 
-<div  *ngIf="record" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-  aria-hidden="true">
+<div *ngIf="record" bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -49,17 +64,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label>Sku Name</label>
-          <input type="text" class="form-control" [(ngModel)]= "record.SkuName" name="SkuName">
-        </div>
-        <div class="form-group">
-          <label>Project Name</label>
-          <input type="text" class="form-control" [(ngModel)]= "record.ProjectName"  name="ProjectName">
-        </div>
+        <form #heroForm="ngForm">
+          <div class="form-group">
+            <label>Sku Name</label>
+            <input type="text" class="form-control" [(ngModel)]="record.SkuName" name="SkuName" required>
+          </div>
+          <div class="form-group">
+              <label>Client Name</label>
+              <select class="form-control" [(ngModel)]="record.Client" name="Client">
+                  <option *ngFor="let client of clients" value= "{{ client.companyname }}">{{ client.companyname }}  </option>
+              </select>
+            </div>
+          <div class="form-group">
+            <label>Project Name</label>
+            <select class="form-control" [(ngModel)]="record.ProjectName" name="ProjectName">
+                <option *ngFor="let project of getProjects(record.Client)" value= "{{ project.ProjectName }}">{{ project.ProjectName }}  </option>
+            </select>
+          </div>
+        </form>
         <div class="panel-footer">
           <a class="btn btn-danger" [routerLink]="['/skulist']">Cancel</a>
-          <button class="btn btn-success" type="button" (click)='submitPost()' data-dismiss="myModal" class="btn btn-default">Submit</button>
+          <button class="btn btn-primary" type="button" (click)='submitPost()' data-dismiss="myModal">Submit</button>
         </div>
       </div>
     </div>

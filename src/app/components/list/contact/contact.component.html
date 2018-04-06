@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-8">
+          <h4> Contacts List </h4>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-11">
+              <input #myInput type="text" class="form-control" name="skusearch" placeholder="Search by Contact Name">
+            </div>
+            <div class="col-md-1">
+              <h4> <span class="pull-right glyphicon glyphicon-search" (click)="showSearchData(myInput.value)"> </span> </h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>Fax</th>
+              <th>Skype</th>
+              <th>Department</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of records">
+              <td>{{ record.name }}</td>
+              <td>{{ record.CompanyName }}</td>
+              <td>{{ record.email }}</td>
+              <td>{{ record.fax }}</td>
+              <td>{{ record.skype }}</td>
+              <td>{{ record.department }}</td>
+              <td>{{ record.role }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

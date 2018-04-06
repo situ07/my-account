@@ -1,0 +1,26 @@
+<div  bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="panel-body">
+          <form class="form">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" class="form-control" [(ngModel)]= "user.username" name="username">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" [(ngModel)]= "user.password" name="password">
+            </div>
+          </form>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-success" (click)="handleLogin()">Login</button>
+          <button class="btn btn-danger" (click)="hideChildModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

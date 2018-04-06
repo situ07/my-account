@@ -1,0 +1,213 @@
+<div class="container" *ngIf="record">
+
+  <div class="row">
+    <div class="col-xs-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading"> Project List </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr *ngFor="let project of projects">
+                  <td> <a [routerLink]="['/projectlist', project.id]"> >> </a> </td>
+                  <td>
+                    <a [routerLink]="['/projectlist', project.id]"> 
+                        <span *ngIf="currentid" [style.color]="currentid == project.id ? 'red' : null">
+                      {{ project.ProjectName }}
+                        </span>
+                      </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xs-9">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>Detail for Project >> {{record.ProjectName}}</h4>
+        </div>
+        <div class="panel-body">
+          <tabset>
+            <tab heading="Project Overview">
+              <br>
+              <div class="panel panel-info">
+                <div class="panel-heading">Project >> {{record.ProjectName}}</div>
+              </div>
+              <form class="form">
+                <div class="row">
+                  <div class="col-xs-5 col-md-5 col-lg-7 vcenter">
+                    <div class="form-group">
+                      <label>Project Name</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.ProjectName" name="ProjectName">
+                    </div>
+                    <div class="form-group">
+                      <label>Season</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.Season" name="Season">
+                    </div>
+                    <div class="form-group">
+                      <label>Supplier</label>
+                      <select class="form-control" [(ngModel)]="record.Supplier" name="Supplier">
+                          <option *ngFor="let supplier of suppliers" value="{{ supplier.companyname }}">{{ supplier.companyname }} </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>No Of Skus</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.NoOfSkus" name="NoOfSkus">
+                    </div>
+                    <div class="form-group">
+                      <label>Sourcing Agency</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.SourcingAgency" name="SourcingAgency">
+                    </div>
+                    <div class="form-group">
+                      <label>Design Agency</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.DesignAgency" name="DesignAgency">
+                    </div>
+                    <div class="form-group">
+                      <label>JPG Site</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.jpgsite" name="jpgsite">
+                    </div>
+                  </div>
+
+                  <div class="col-xs-5 col-md-5 col-lg-5 vcenter">
+                    <div class="form-group">
+                      <label>Status</label>
+                      <select class="form-control" [(ngModel)]="record.status" name="status">
+                          <option value="Live">Live</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Invoiced">Invoiced</option>
+                          <option value="Complete">Complete</option>
+                          <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Payment</label>
+                      <select class="form-control" [(ngModel)]="record.payment"  name="payment">
+                          <option value="Client">Client</option>
+                          <option value="Supplier">Supplier</option>
+                          <option value="MIX">MIX</option>
+                          <option value="TBC">TBC</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Client</label>
+                        <select class="form-control" [(ngModel)]="record.CompanyName" name="CompanyName">
+                            <option *ngFor="let client of clients" value="{{ client.companyname }}">{{ client.companyname }} </option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Printer</label>
+                      <select class="form-control" [(ngModel)]="record.printer" name="printer">
+                          <option *ngFor="let printer of printers" value="{{ printer.companyname }}">{{ printer.companyname }} </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Client Contact</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.ClientContact" name="ClientContact">
+                    </div>
+                    <div class="form-group">
+                      <label>Batch</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.Batch" name="Batch">
+                    </div>
+                    <div class="form-group">
+                      <label>Type</label>
+                      <input type="text" class="form-control" [(ngModel)]="record.Team" name="Type">
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+
+            </tab>
+            <tab heading="SKU Details">
+              <br>
+              <div class="panel panel-info">
+                <div class="panel-heading">List of SKus for {{record.ProjectName}}</div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th> </th>
+                          <th>JPG Ref</th>
+                          <th>SKU Name</th>
+                          <th>Project Name</th>
+                          <th>HK PM</th>
+                          <th>Version</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let sku of skus">
+                          <td> <a [routerLink]="['/skulist', sku.id]"> >> </a> </td>
+                          <td>{{ sku.JpgRef }}</td>
+                          <td>{{ sku.SkuName }}</td>
+                          <td>{{ sku.ProjectName }}</td>
+                          <td>{{ sku.HKPM }}</td>
+                          <td>{{ sku.version }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </tab>
+            <tab heading="Estimating and Invoicing">
+              <br>
+              <div class="panel panel-info">
+                <div class="panel-heading">List of SKus for {{record.ProjectName}}: Estimating and Invoicing</div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th> </th>
+                          <th>JPG Ref</th>
+                          <th>SKU Name</th>
+                          <th>Payment</th>
+                          <th>Artwork Cost</th>
+                          <th>Amendment Cost</th>
+                          <th>Service Cost</th>
+                          <th>Opal Cost</th>
+                          <th>SKU Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let sku of skus">
+                          <td> <a [routerLink]="['/skulist', sku.id]"> >> </a> </td>
+                          <td>{{ sku.JpgRef }}</td>
+                          <td>{{ sku.SkuName }}</td>
+                          <td>Supplier</td>
+                          <td>$0.00</td>
+                          <td>$0.00</td>
+                          <td>$0.00</td>
+                          <td>$0.00</td>
+                          <td>$0.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+            </tab>
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+      <a class="btn btn-success" [routerLink]="['/projectlist']">Back</a>
+      <button type="button" (click)='updateProject(record.id)' class="btn btn-primary" data-dismiss="myModal" [disabled]="!isValidForm() || isProcessing">{{ isProcessing ? 'Submitting...' : 'Submit' }}</button>
+    </div>
+    <div>
+        <ngx-alerts></ngx-alerts>
+      </div>
+
+</div>

@@ -43,6 +43,26 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['./skulist'])
   }
 
+
+  invoicelist(): void {
+    this.width = 0;
+    this._route.globalVar = "invoice";
+    console.log(this._route.globalVar);
+    this.router.navigate(['./invoicelist'])
+  }
+
+  companylist():void{
+    this.width = 0;
+    this._route.globalVar = "Company";
+    this.router.navigate(['./companylist'])
+  }
+
+  contactlist():void{
+    this.width = 0;
+    this._route.globalVar = "Contact";
+    this.router.navigate(['./contactlist'])
+  }
+
   projectlist(): void {
     this.width = 0;
     this._route.globalVar = "project";
@@ -55,6 +75,31 @@ export class HeaderComponent implements OnInit {
     if (this._route.globalVar === "sku") {
       this.router.navigate(['./skulist/new'])
     }
+    if (this._route.globalVar === "project") {
+      this.router.navigate(['./projectlist/new'])
+    }
+
+    if (this._route.globalVar === "Company") {
+      this.router.navigate(['./companylist/new'])
+    }
+  }
+
+  listdetail(): void {
+    this.width = 0;
+    if (this._route.globalVar === "sku") {
+      this.router.navigate(['./skulist/:id'])
+    }
+    if (this._route.globalVar === "project") {
+      this.router.navigate(['./projectlist/:id'])
+    }
+
+    if (this._route.globalVar === "Company") {
+      this.router.navigate(['./companylist/:id'])
+    }
+  }
+
+  login(): void {
+      this.router.navigate(['./login'])
   }
 
   Home(): void {

@@ -5,13 +5,24 @@
 }
 
 .glyphicon {
-    font-size: 1.2em;
+    font-size: 40px;
 }
-.customClass{
-    background-color: #2C4878;
-    color: white;
-}
-
 .pointer {
     cursor: pointer;
+}
+
+.customClass{
+    cursor: pointer;
+    background-color : #2C4878 !important;
+}
+
+.popover {
+    cursor: pointer;
+    background-color : #2C4878 !important;
+}
+
+.test {
+    cursor: pointer;
+    color: #000000 !important;
+
 }
